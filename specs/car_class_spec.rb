@@ -1,17 +1,18 @@
 require('minitest/autorun')
 require('minitest/rg')
 require_relative('../car_class')
+require_relative('../engine_class')
 
 class TestCarClass < MiniTest::Test
 
   def setup
-    @bobs_car = Car.new("Ford", 100, 0)
-    @janes_car = Car.new("Ferrari", 100, 0, @turbo_engine)
-    @maxs_car = Car.new("Mercedes", 100, 0, @turbo_engine)
-    @tims_car = Car.new("BMW", 85, 60, @old_engine)
-    @turbo_engine = Engine.new(-10, +25)
-    @old_engine = Engine.new(-10, +5)
-    @normal_engine = Engine.new(-5, +10)
+    @bobs_car = Car.new("Ford", @fuel_level, @speed, @normal_engine)
+    @janes_car = Car.new("Ferrari", @fuel_level, @speed, @turbo_engine)
+    @maxs_car = Car.new("Mercedes", @fuel_level, @speed, @turbo_engine)
+    @tims_car = Car.new("BMW", @fuel_level, @speed, @old_engine)
+    @turbo_engine = Engine.new('Turbo')
+    @old_engine = Engine.new('Old')
+    @normal_engine = Engine.new('Normal')
   end 
 
   def test_car_fuel_level
@@ -26,21 +27,39 @@ class TestCarClass < MiniTest::Test
     assert_equal("Mercedes", @maxs_car.make)
   end
 
-  def test_car_accelerate
+  def test_engine_on_car
+    assert_equal('Old', @tims_car.engine_type)
+  end
+
+  def test_car_acceleratation__turbo
     @maxs_car.car_accelerate
-    assert_equal(95, @maxs_car.fuel_level)
-    assert_equal(10, @maxs_car.speed)
+    assert_equal(90, @maxs_car.fuel_level)
+    assert_equal(25, @maxs_car.speed)
   end
 
-  def test_car_break__car_still
-    assert_equal(100, @bobs_car.fuel_level)
-    assert_equal(0, @bobs_car.speed)
+  def test_car_acceleration__old
+    @tims_car.car_accelerate
+    assert_equal(90, @tims_car.fuel_level)
+    assert_equal(5, @tims_car.speed)
   end
 
-  def test_car_break__car_moving
-    @tims_car.car_break
-    assert_equal(50, @tims_car.speed)
+  def test_car_acceleration__normal
+    @bobs_car.car_accelerate
+    assert_equal(95, @bobs_car.fuel_level)
+    assert_equal(10, @bobs_car.speed)
   end
+
+  # def test_car_break__car_moving #NEEDS CHANGING
+  #   @tims_car.car_accelerate
+  #   @tims_car.car_accelerate
+  #   @tims_car.car_break
+  #   assert_equal(50, @tims_car.speed)
+  # end
+
+  # def test_car_break__car_still
+  #   assert_equal(100, @bobs_car.fuel_level)
+  #   assert_equal(0, @bobs_car.speed)
+  # end
 
 
 
