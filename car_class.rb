@@ -1,16 +1,16 @@
 class Car
 
-  attr_reader(:make, :fuel_level, :speed)
+  attr_reader(:make, :fuel_level, :speed, :engine)
 
-  def initialize(make, fuel_level, speed, engine_type)
+  def initialize(make, engine)
     @make = make
     @fuel_level = 100
     @speed = 0
-    @engine_type = engine_type
+    @engine = engine
   end
 
   def car_accelerate
-    case @engine_type
+    case @engine.engine_type
     when "Turbo"
       @fuel_level -= 10
       @speed += 25
@@ -19,7 +19,7 @@ class Car
       @speed += 5
     when "Normal"
       @fuel_level -= 5
-      @speed ++ 10
+      @speed += 10
     end
   end
 

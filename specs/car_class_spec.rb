@@ -6,13 +6,13 @@ require_relative('../engine_class')
 class TestCarClass < MiniTest::Test
 
   def setup
-    @bobs_car = Car.new("Ford", @fuel_level, @speed, @normal_engine)
-    @janes_car = Car.new("Ferrari", @fuel_level, @speed, @turbo_engine)
-    @maxs_car = Car.new("Mercedes", @fuel_level, @speed, @turbo_engine)
-    @tims_car = Car.new("BMW", @fuel_level, @speed, @old_engine)
     @turbo_engine = Engine.new('Turbo')
     @old_engine = Engine.new('Old')
     @normal_engine = Engine.new('Normal')
+    @bobs_car = Car.new("Ford", @normal_engine)
+    @janes_car = Car.new("Ferrari", @turbo_engine)
+    @maxs_car = Car.new("Mercedes", @turbo_engine)
+    @tims_car = Car.new("BMW", @old_engine)
   end 
 
   def test_car_fuel_level
@@ -28,7 +28,7 @@ class TestCarClass < MiniTest::Test
   end
 
   def test_engine_on_car
-    assert_equal('Old', @tims_car.engine_type)
+    assert_equal('Old', @tims_car.engine.engine_type)
   end
 
   def test_car_acceleratation__turbo
